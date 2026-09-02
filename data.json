@@ -58,7 +58,7 @@
         },
         {
           "name": "Lyneil",
-          "sales": 9,
+          "sales": 10,
           "lastWeek": 0
         },
         {
@@ -100,7 +100,12 @@
           "name": "Maxwell",
           "sales": 1,
           "lastWeek": 0
-        }
+        },
+        {
+          "name": "Antonio",
+          "sales": 1,
+          "lastWeek": 0
+          }
       ]
     }
   ]
