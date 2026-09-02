@@ -1,0 +1,107 @@
+{
+  "weekLabel": "Week of Aug 31 \u2013 Sep 6",
+  "teams": [
+    {
+      "name": "Cincinnati / Dayton",
+      "short": "CIN/DAY",
+      "reps": [
+        {
+          "name": "Richard",
+          "sales": 13,
+          "lastWeek": 0
+        },
+        {
+          "name": "Chase",
+          "sales": 9,
+          "lastWeek": 0
+        },
+        {
+          "name": "Lewis",
+          "sales": 8,
+          "lastWeek": 0
+        },
+        {
+          "name": "Tomas",
+          "sales": 7,
+          "lastWeek": 0
+        },
+        {
+          "name": "Lexi",
+          "sales": 7,
+          "lastWeek": 0
+        },
+        {
+          "name": "Dom",
+          "sales": 1,
+          "lastWeek": 0
+        },
+        {
+          "name": "Chris",
+          "sales": 0,
+          "lastWeek": 0
+        },
+        {
+          "name": "Tony",
+          "sales": 0,
+          "lastWeek": 0
+        }
+      ]
+    },
+    {
+      "name": "Cleveland",
+      "short": "CLE",
+      "reps": [
+        {
+          "name": "Walter",
+          "sales": 11,
+          "lastWeek": 0
+        },
+        {
+          "name": "Lyneil",
+          "sales": 9,
+          "lastWeek": 0
+        },
+        {
+          "name": "Zach",
+          "sales": 4,
+          "lastWeek": 0
+        },
+        {
+          "name": "Ishmael",
+          "sales": 3,
+          "lastWeek": 0
+        },
+        {
+          "name": "Shaminder",
+          "sales": 3,
+          "lastWeek": 0
+        },
+        {
+          "name": "Adam",
+          "sales": 2,
+          "lastWeek": 0
+        },
+        {
+          "name": "Mary",
+          "sales": 2,
+          "lastWeek": 0
+        },
+        {
+          "name": "Tautiana",
+          "sales": 2,
+          "lastWeek": 0
+        },
+        {
+          "name": "Darron",
+          "sales": 1,
+          "lastWeek": 0
+        },
+        {
+          "name": "Maxwell",
+          "sales": 1,
+          "lastWeek": 0
+        }
+      ]
+    }
+  ]
+}
