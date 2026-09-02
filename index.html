@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Energy — Power Rankings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lime: #9BD319;
+    --green: #35A845;
+    --glow: rgba(155, 211, 25, .45);
+    --bg: #0F160F;
+    --surface: #182118;
+    --surface-2: #1F2B1F;
+    --line: #2A382A;
+    --text: #F2F5EE;
+    --muted: #8FA38C;
+    --gold: #F5C542;
+    --silver: #C9D2CE;
+    --bronze: #D0854A;
+    --red: #E05A4E;
+    --radius: 14px;
+    --scale: 1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background:
+      radial-gradient(60% 30% at 50% 0%, rgba(155, 211, 25, .08), transparent 70%),
+      repeating-linear-gradient(0deg, transparent 0 39px, rgba(155, 211, 25, .025) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, rgba(155, 211, 25, .025) 39px 40px),
+      var(--bg);
+    color: var(--text);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: calc(16px * var(--scale));
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(18px * var(--scale)) calc(16px * var(--scale)) calc(48px * var(--scale));
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: calc(20px * var(--scale));
+  }
+  .brand { display: flex; align-items: center; gap: calc(12px * var(--scale)); }
+  .bolt {
+    width: calc(40px * var(--scale));
+    height: calc(40px * var(--scale));
+    flex: none;
+    filter: drop-shadow(0 0 calc(8px * var(--scale)) var(--glow));
+  }
+  .brand h1 {
+    font-size: calc(20px * var(--scale));
+    font-weight: 900;
+    font-stretch: 108%;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .brand .week {
+    color: var(--muted);
+    font-size: calc(13px * var(--scale));
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .tv-btn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    font-size: calc(13px * var(--scale));
+    padding: calc(9px * var(--scale)) calc(14px * var(--scale));
+    border-radius: 999px;
+    cursor: pointer;
+    flex: none;
+  }
+  .tv-btn:hover { border-color: var(--lime); }
+  .tv-btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+
+  /* Team battle — the grid */
+  .battle {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: calc(16px * var(--scale)) calc(16px * var(--scale)) calc(18px * var(--scale));
+    margin-bottom: calc(18px * var(--scale));
+  }
+  .battle .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: calc(10px * var(--scale));
+  }
+  .battle .side { min-width: 0; }
+  .battle .side.right { text-align: right; }
+  .battle .team-name {
+    font-weight: 800;
+    font-stretch: 105%;
+    font-size: calc(14px * var(--scale));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .battle .team-total {
+    font-size: calc(40px * var(--scale));
+    font-weight: 900;
+    font-stretch: 90%;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .battle .side.leading .team-total {
+    color: var(--lime);
+    text-shadow: 0 0 calc(18px * var(--scale)) var(--glow);
+  }
+  .bar {
+    height: calc(14px * var(--scale));
+    border-radius: 999px;
+    background: var(--surface-2);
+    overflow: hidden;
+    display: flex;
+  }
+  .bar .fill-a {
+    background:
+      repeating-linear-gradient(115deg,
+        rgba(255, 255, 255, .22) 0 10px,
+        transparent 10px 26px),
+      linear-gradient(90deg, var(--lime), var(--green));
+    background-size: 200px 100%, 100% 100%;
+    box-shadow: 0 0 calc(12px * var(--scale)) var(--glow);
+    animation: current 1.2s linear infinite;
+    transition: width .6s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes current {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 200px 0, 0 0; }
+  }
+  .bar .fill-b { background: #3B4C3B; flex: 1; }
+  .battle .caption {
+    margin-top: calc(9px * var(--scale));
+    color: var(--muted);
+    font-size: calc(13px * var(--scale));
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: calc(14px * var(--scale));
+  }
+  .tab {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font: inherit;
+    font-weight: 700;
+    font-size: calc(13px * var(--scale));
+    padding: calc(8px * var(--scale)) calc(14px * var(--scale));
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .tab.active {
+    background: var(--lime);
+    border-color: var(--lime);
+    color: #10250D;
+  }
+
+  /* Leaderboard — charge meters */
+  .board { display: flex; flex-direction: column; gap: calc(8px * var(--scale)); }
+  .rep {
+    display: grid;
+    grid-template-columns: calc(44px * var(--scale)) 1fr auto;
+    align-items: center;
+    gap: calc(10px * var(--scale));
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: calc(12px * var(--scale)) calc(14px * var(--scale));
+    position: relative;
+    overflow: hidden;
+  }
+  .rep .meter {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(155,211,25,.16), rgba(53,168,69,.05));
+    border-right: 2px solid rgba(155,211,25,.35);
+    transform-origin: left;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+  }
+  .rep > * { position: relative; }
+  .rep.first {
+    border-color: var(--lime);
+    box-shadow: 0 0 calc(16px * var(--scale)) rgba(155, 211, 25, .18);
+  }
+  .rank {
+    font-size: calc(20px * var(--scale));
+    font-weight: 900;
+    font-stretch: 90%;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    text-align: center;
+  }
+  .rep.first .rank { color: var(--gold); }
+  .rep.second .rank { color: var(--silver); }
+  .rep.third .rank { color: var(--bronze); }
+  .who { min-width: 0; }
+  .who .name {
+    font-weight: 800;
+    font-stretch: 105%;
+    font-size: calc(17px * var(--scale));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .who .name .spark { font-size: calc(15px * var(--scale)); }
+  .chip {
+    display: inline-block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: calc(11.5px * var(--scale));
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  .score {
+    display: flex;
+    align-items: center;
+    gap: calc(10px * var(--scale));
+  }
+  .move {
+    font-size: calc(13px * var(--scale));
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    min-width: calc(34px * var(--scale));
+    text-align: right;
+  }
+  .move.up { color: var(--lime); }
+  .move.down { color: var(--red); }
+  .move.flat { color: var(--muted); }
+  .sales {
+    font-size: calc(26px * var(--scale));
+    font-weight: 900;
+    font-stretch: 90%;
+    font-variant-numeric: tabular-nums;
+    min-width: calc(40px * var(--scale));
+    text-align: right;
+  }
+  .rep.first .sales {
+    color: var(--lime);
+    text-shadow: 0 0 calc(14px * var(--scale)) var(--glow);
+  }
+  .empty {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    padding: calc(22px * var(--scale));
+    text-align: center;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: calc(14px * var(--scale));
+  }
+  .foot {
+    margin-top: calc(22px * var(--scale));
+    text-align: center;
+    color: var(--muted);
+    font-size: calc(12px * var(--scale));
+    font-weight: 600;
+  }
+
+  /* TV mode */
+  body.tv { --scale: 1.55; }
+  body.tv .wrap { max-width: 1100px; }
+  body.tv .foot { display: none; }
+  @media (min-width: 1400px) { body.tv { --scale: 1.9; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar .fill-a { animation: none; }
+    .bar .fill-a, .rep .meter { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg class="bolt" viewBox="0 0 40 40" aria-hidden="true">
+        <defs>
+          <linearGradient id="boltGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#9BD319"/>
+            <stop offset="1" stop-color="#35A845"/>
+          </linearGradient>
+        </defs>
+        <path d="M23 2 L8 23 h9 L15 38 L32 15 h-10 Z" fill="url(#boltGrad)"/>
+      </svg>
+      <div>
+        <h1>Power Rankings</h1>
+        <div class="week" id="weekLabel">Loading…</div>
+      </div>
+    </div>
+    <button class="tv-btn" id="tvBtn">TV mode</button>
+  </header>
+
+  <section class="battle" id="battle" hidden>
+    <div class="row">
+      <div class="side" id="sideA">
+        <div class="team-name"></div>
+        <div class="team-total">0</div>
+      </div>
+      <div class="side right" id="sideB">
+        <div class="team-name"></div>
+        <div class="team-total">0</div>
+      </div>
+    </div>
+    <div class="bar" aria-hidden="true">
+      <div class="fill-a" id="fillA" style="width:50%"></div>
+      <div class="fill-b"></div>
+    </div>
+    <div class="caption" id="battleCaption"></div>
+  </section>
+
+  <nav class="tabs" id="tabs" aria-label="Filter by team"></nav>
+
+  <main class="board" id="board" aria-live="polite"></main>
+
+  <p class="foot">Scores update when data.json changes. In TV mode the board refreshes itself every 60 seconds.</p>
+</div>
+
+<script>
+(function () {
+  var DATA_URL = "data.json";
+  var state = { data: null, filter: "all" };
+  var refreshTimer = null;
+
+  function $(id) { return document.getElementById(id); }
+
+  function allReps(data) {
+    var out = [];
+    data.teams.forEach(function (team) {
+      team.reps.forEach(function (rep) {
+        out.push({
+          name: rep.name,
+          sales: Number(rep.sales) || 0,
+          lastWeek: Number(rep.lastWeek) || 0,
+          team: team.name,
+          teamShort: team.short || team.name
+        });
+      });
+    });
+    return out;
+  }
+
+  function rankOf(list, key) {
+    var sorted = list.slice().sort(function (a, b) {
+      return b[key] - a[key] || a.name.localeCompare(b.name);
+    });
+    var ranks = {};
+    sorted.forEach(function (rep, i) { ranks[rep.team + "|" + rep.name] = i + 1; });
+    return ranks;
+  }
+
+  function render() {
+    var data = state.data;
+    if (!data) return;
+
+    $("weekLabel").textContent = data.weekLabel || "";
+
+    // Team battle
+    var battle = $("battle");
+    if (data.teams.length >= 2) {
+      battle.hidden = false;
+      var a = data.teams[0], b = data.teams[1];
+      var totalA = a.reps.reduce(function (s, r) { return s + (Number(r.sales) || 0); }, 0);
+      var totalB = b.reps.reduce(function (s, r) { return s + (Number(r.sales) || 0); }, 0);
+      var sideA = $("sideA"), sideB = $("sideB");
+      sideA.querySelector(".team-name").textContent = a.name;
+      sideB.querySelector(".team-name").textContent = b.name;
+      sideA.querySelector(".team-total").textContent = totalA;
+      sideB.querySelector(".team-total").textContent = totalB;
+      sideA.classList.toggle("leading", totalA >= totalB && totalA > 0);
+      sideB.classList.toggle("leading", totalB > totalA);
+      var sum = totalA + totalB;
+      $("fillA").style.width = sum === 0 ? "50%" : Math.round((totalA / sum) * 100) + "%";
+      var cap;
+      if (sum === 0) cap = "The grid is cold — first sale turns the power on.";
+      else if (totalA === totalB) cap = "Dead even. Next sale tips the grid.";
+      else {
+        var lead = totalA > totalB ? a : b;
+        var diff = Math.abs(totalA - totalB);
+        cap = lead.name + " is powering the grid — up by " + diff + " sale" + (diff === 1 ? "" : "s");
+      }
+      $("battleCaption").textContent = cap;
+    } else {
+      battle.hidden = true;
+    }
+
+    // Tabs
+    var tabs = $("tabs");
+    tabs.innerHTML = "";
+    var options = [{ id: "all", label: "Everyone" }].concat(
+      data.teams.map(function (t) { return { id: t.name, label: t.short || t.name }; })
+    );
+    options.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.className = "tab" + (state.filter === opt.id ? " active" : "");
+      btn.textContent = opt.label;
+      btn.addEventListener("click", function () {
+        state.filter = opt.id;
+        render();
+      });
+      tabs.appendChild(btn);
+    });
+
+    // Leaderboard
+    var reps = allReps(data);
+    var currentRanks = rankOf(reps, "sales");
+    var hasHistory = reps.some(function (r) { return r.lastWeek > 0; });
+    var prevRanks = hasHistory ? rankOf(reps, "lastWeek") : null;
+
+    var visible = reps.filter(function (r) {
+      return state.filter === "all" || r.team === state.filter;
+    }).sort(function (a, b) {
+      return b.sales - a.sales || a.name.localeCompare(b.name);
+    });
+
+    var board = $("board");
+    board.innerHTML = "";
+
+    if (visible.length === 0) {
+      var empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "No reps on the grid yet. Add this team's roster in data.json to power them up.";
+      board.appendChild(empty);
+      return;
+    }
+
+    var maxSales = Math.max.apply(null, visible.map(function (r) { return r.sales; }).concat([1]));
+
+    visible.forEach(function (rep, i) {
+      var key = rep.team + "|" + rep.name;
+      var row = document.createElement("article");
+      var cls = "rep";
+      if (state.filter === "all" && rep.sales > 0) {
+        if (i === 0) cls += " first";
+        else if (i === 1) cls += " second";
+        else if (i === 2) cls += " third";
+      }
+      row.className = cls;
+
+      var meter = document.createElement("div");
+      meter.className = "meter";
+      meter.style.transform = "scaleX(" + (rep.sales / maxSales) + ")";
+      row.appendChild(meter);
+
+      var rank = document.createElement("div");
+      rank.className = "rank";
+      rank.textContent = i + 1;
+      row.appendChild(rank);
+
+      var who = document.createElement("div");
+      who.className = "who";
+      var name = document.createElement("div");
+      name.className = "name";
+      name.textContent = rep.name;
+      if (state.filter === "all" && i === 0 && rep.sales > 0) {
+        var spark = document.createElement("span");
+        spark.className = "spark";
+        spark.textContent = "⚡";
+        name.appendChild(spark);
+      }
+      who.appendChild(name);
+      var chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = rep.teamShort;
+      who.appendChild(chip);
+      row.appendChild(who);
+
+      var score = document.createElement("div");
+      score.className = "score";
+      var move = document.createElement("span");
+      if (prevRanks) {
+        var delta = prevRanks[key] - currentRanks[key];
+        if (delta > 0) { move.className = "move up"; move.textContent = "▲" + delta; }
+        else if (delta < 0) { move.className = "move down"; move.textContent = "▼" + Math.abs(delta); }
+        else { move.className = "move flat"; move.textContent = "—"; }
+      } else {
+        move.className = "move flat";
+        move.textContent = "";
+      }
+      score.appendChild(move);
+      var sales = document.createElement("span");
+      sales.className = "sales";
+      sales.textContent = rep.sales;
+      score.appendChild(sales);
+      row.appendChild(score);
+
+      board.appendChild(row);
+    });
+  }
+
+  function load() {
+    fetch(DATA_URL + "?t=" + Date.now())
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        state.data = data;
+        render();
+      })
+      .catch(function () {
+        $("weekLabel").textContent = "Couldn't load data.json — check the file is in the same folder and is valid JSON.";
+      });
+  }
+
+  $("tvBtn").addEventListener("click", function () {
+    var on = document.body.classList.toggle("tv");
+    this.textContent = on ? "Exit TV mode" : "TV mode";
+    if (on) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(function () {});
+      }
+      refreshTimer = setInterval(load, 60000);
+    } else {
+      if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+      clearInterval(refreshTimer);
+    }
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

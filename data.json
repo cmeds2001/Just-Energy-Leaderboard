@@ -1,0 +1,24 @@
+{
+  "weekLabel": "Week of Aug 31 – Sep 6",
+  "teams": [
+    {
+      "name": "Cincinnati / Dayton",
+      "short": "CIN/DAY",
+      "reps": [
+        { "name": "Dom", "sales": 0, "lastWeek": 0 },
+        { "name": "Tomas", "sales": 0, "lastWeek": 0 },
+        { "name": "Richard", "sales": 0, "lastWeek": 0 },
+        { "name": "Chase", "sales": 0, "lastWeek": 0 },
+        { "name": "Lexi", "sales": 0, "lastWeek": 0 },
+        { "name": "Tony", "sales": 0, "lastWeek": 0 },
+        { "name": "Lewis", "sales": 0, "lastWeek": 0 },
+        { "name": "Chris", "sales": 0, "lastWeek": 0 }
+      ]
+    },
+    {
+      "name": "Cleveland",
+      "short": "CLE",
+      "reps": []
+    }
+  ]
+}
