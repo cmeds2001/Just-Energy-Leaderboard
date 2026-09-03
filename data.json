@@ -44,6 +44,11 @@
           "name": "Tony",
           "sales": 3,
           "lastWeek": 0
+        },
+        {
+          "name": "Devin",
+          "sales": 1,
+          "lastWeek": 0
         }
       ]
     },
