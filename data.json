@@ -7,17 +7,17 @@
       "reps": [
         {
           "name": "Richard",
-          "sales": 15,
+          "sales": 21,
           "lastWeek": 0
         },
         {
           "name": "Chase",
-          "sales": 9,
+          "sales": 10,
           "lastWeek": 0
         },
         {
           "name": "Lewis",
-          "sales": 8,
+          "sales": 15,
           "lastWeek": 0
         },
         {
@@ -27,22 +27,22 @@
         },
         {
           "name": "Lexi",
-          "sales": 7,
+          "sales": 8,
           "lastWeek": 0
         },
         {
           "name": "Dom",
-          "sales": 2,
+          "sales": 5,
           "lastWeek": 0
         },
         {
           "name": "Chris",
-          "sales": 0,
+          "sales": 7,
           "lastWeek": 0
         },
         {
           "name": "Tony",
-          "sales": 0,
+          "sales": 3,
           "lastWeek": 0
         }
       ]
@@ -58,27 +58,27 @@
         },
         {
           "name": "Lyneil",
-          "sales": 10,
+          "sales": 15,
           "lastWeek": 0
         },
         {
           "name": "Zach",
-          "sales": 4,
+          "sales": 6,
           "lastWeek": 0
         },
         {
           "name": "Ishmael",
-          "sales": 3,
+          "sales": 6,
           "lastWeek": 0
         },
         {
           "name": "Shaminder",
-          "sales": 4,
+          "sales": 6,
           "lastWeek": 0
         },
         {
           "name": "Adam",
-          "sales": 2,
+          "sales": 3,
           "lastWeek": 0
         },
         {
@@ -98,11 +98,16 @@
         },
         {
           "name": "Maxwell",
-          "sales": 1,
+          "sales": 5,
           "lastWeek": 0
         },
         {
           "name": "Antonio",
+          "sales": 3,
+          "lastWeek": 0
+        },
+        {
+          "name": "Michael",
           "sales": 1,
           "lastWeek": 0
           }
